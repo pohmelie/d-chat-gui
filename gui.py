@@ -1,46 +1,33 @@
-from tkinter import *
+from PySide import QtCore, QtGui
 
-master = Tk()
 
-entry = Entry(master)
-entry.pack()
+class ChatText(QtGui.QTextEdit):
+    def __init__(self, *args, **kwargs):
+        QtGui.QTextEdit.__init__(self, *args, **kwargs)
+        self.setFrameShape(QtGui.QFrame.NoFrame)
+        self.setReadOnly(True)
+        self.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse | QtCore.Qt.TextSelectableByMouse)
 
-def process(data):
-    print("processing: {0}".format(data))
 
-def stdin_callback(fd, mask):
-    print("stdin")
-    data = sys.stdin.readline()
-    process(data[:-1])
+class Input(QtGui.QLineEdit):
+    def __init__(self, prefix="", *args, **kwargs):
+        QtGui.QLineEdit.__init__(self, *args, **kwargs)
+        self.prefix = prefix
 
-def socket_callback(fd, mask):
-    print("socket")
-    try:
-        data= sock.recv(1024)
-        if data:
-            process (data)
-        else:
-            close_socket ()
-    except socket.error as ex:
-        close_socket ()
 
-def close_socket():
-    #closing socket without removing filehandler may hurt
-    sock.close()
-    master.deletefilehandler(fileno)
+class Tab(QtGui.QFrame):
+    def __init__(self, prefix="", *args, **kwargs):
+        QtGui.QFrame.__init__(self, *args, **kwargs)
 
-def entry_callback(event):
-    print("entry")
-    process(event.widget.get())
+        self.chat_text = ChatText()
+        self.input = QtGui.QLineEdit()
 
-entry.bind("<Return>", entry_callback)
-#master.createfilehandler(sys.stdin,READABLE, stdin_callback)
+        gl = QtGui.QGridLayout(self)
+        gl.addWidget(self.chat_text, 0, 0)
+        gl.addWidget(self.input, 1, 0)
 
-print(dir(tkinter))
-#master.eval("set sock [socket -async google.com 80]")
-#sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#sock.connect(("localhost", 5678))
-#fileno = sock.fileno()
-#master.createfilehandler(fileno, READABLE, socket_callback)
 
-master.mainloop()
+class Gui(QtGui.QTabWidget):
+    def __init__(self, *args, **kwargs):
+        QtGui.QTabWidget.__init__(self, *args, **kwargs)
+        self.setMovable(True)
