@@ -9,12 +9,6 @@ class ChatText(QtGui.QTextEdit):
         self.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse | QtCore.Qt.TextSelectableByMouse)
 
 
-class Input(QtGui.QLineEdit):
-    def __init__(self, prefix="", *args, **kwargs):
-        QtGui.QLineEdit.__init__(self, *args, **kwargs)
-        self.prefix = prefix
-
-
 class Tab(QtGui.QFrame):
     def __init__(self, prefix="", *args, **kwargs):
         QtGui.QFrame.__init__(self, *args, **kwargs)

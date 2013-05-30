@@ -20,11 +20,17 @@ class Dchat():
         self.bnet = bnet.Bnet(host, port, self.login_error, self.chat_event)
         self.gui = gui.Gui()
 
-        self.gui.addTab(gui.Tab(), "None")
+        self.main_tab = gui.Tab()
+        self.gui.addTab(self.main_tab, "main")
+
+        self.main_tab.input.returnPressed.connect(self.on_input)
+
         self.gui.show()
 
     def on_input(self):
-        pass
+        txt = self.main_tab.input.text()
+        self.main_tab.chat_text.append("<b>" + txt + "</b>")
+        self.main_tab.input.clear()
 
     def login_error(self, packet_id, retcode=None):
         pass
