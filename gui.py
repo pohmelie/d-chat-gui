@@ -20,6 +20,13 @@ class Tab(QtGui.QFrame):
         gl.addWidget(self.chat_text, 0, 0)
         gl.addWidget(self.input, 1, 0)
 
+    def set_background(self, color):
+        color = QtGui.QColor(color)
+        for w in (self.chat_text, self.input):
+            pal = w.palette()
+            pal.setColor(QtGui.QPalette.Base, color)
+            w.setPalette(pal)
+
 
 class Gui(QtGui.QTabWidget):
     def __init__(self, *args, **kwargs):

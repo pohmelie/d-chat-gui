@@ -31,7 +31,7 @@ class Dchat():
 
     def on_input(self):
         txt = self.main_tab.input.text()
-        self.main_tab.chat_text.append("<b>" + txt + "</b>")
+        self.main_tab.chat_text.append("<span style=\"color:#ffaaaa;\">" + txt + "</span>")
         self.main_tab.input.clear()
 
     def login_error(self, packet_id, retcode=None):
